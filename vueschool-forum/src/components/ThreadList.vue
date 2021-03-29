@@ -28,7 +28,9 @@
                           <p class="text-xsmall">
                               <a href="#">{{ userById(thread.userId).name }}</a>
                           </p>
-                          <p class="text-xsmall text-faded">{{ thread.publishedAt }}</p>
+                          <p class="text-xsmall text-faded">
+                            <app-date :timestamp="thread.publishedAt"/>
+                          </p>
                       </div>
                   </div>
               </div>

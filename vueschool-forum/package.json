@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.4",
+    "eslint-import-resolver-webpack": "^0.12.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.5"
   },

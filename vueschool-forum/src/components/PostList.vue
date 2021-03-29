@@ -1,33 +1,31 @@
 <template>
-  <div class="col-large push-top">
-    <h1>{{ thread.title }}</h1>
-    <div class="post-list">
-      <div v-for="postId in thread.posts"
-        :key="postId"
-        class="post"
-      >
-        <div class="user-info">
-            <a href="#" class="user-name">{{ userById(postById(postId).userId).name }}</a>
+  <div class="post-list">
+    <div v-for="post in posts"
+      :key="post.id"
+      class="post"
+    >
+      <div class="user-info">
+          <a href="#" class="user-name">{{ userById(post.userId).name }}</a>
 
-            <a href="#">
-                <img class="avatar-large" :src="userById(postById(postId).userId).avatar" alt="">
-            </a>
+          <a href="#">
+              <img class="avatar-large" :src="userById(post.userId).avatar" alt="">
+          </a>
 
-            <p class="desktop-only text-small">107 posts</p>
-        </div>
-
-          <div class="post-content">
-              <div>
-                <p>
-                  {{ postById(postId).text }}
-                </p>
-              </div>
-          </div>
-          <div class="post-date text-faded">
-              {{ postById(postId).publishedAt }}
-          </div>
-        </div>
+          <p class="desktop-only text-small">107 posts</p>
       </div>
+
+      <div class="post-content">
+          <div>
+            <p>
+              {{ post.text }}
+            </p>
+          </div>
+      </div>
+
+      <div class="post-date text-faded">
+          <app-date :timestamp="post.publishedAt"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,27 +34,17 @@ import sourceData from '@/data.json'
 
 export default {
   props: {
-    id: {
+    posts: {
       required: true,
-      type: String
+      type: Array
     }
   },
   data () {
     return {
-      threads: sourceData.threads,
-      posts: sourceData.posts,
       users: sourceData.users
     }
   },
-  computed: {
-    thread () {
-      return this.threads.find(thread => thread.id === this.$route.params.id)
-    }
-  },
   methods: {
-    postById (postId) {
-      return this.posts.find(p => p.id === postId)
-    },
     userById (postId) {
       return this.users.find(p => p.id === postId)
     }
@@ -64,7 +52,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .post-list {
     margin-top: 20px;
 }
@@ -330,51 +318,5 @@ export default {
 
 .post-listing-editor {
     flex: 1 1 83%;
-}
-
-.profile-card {
-    padding: 10px 20px 20px 20px;
-    margin-bottom: 10px;
-    background: white;
-    box-shadow: 2px 2px 1px rgba(136, 136, 136, 0.09);
-    align-self: self-end;
-}
-
-@media (min-width: 820px) {
-    .profile-card {
-        margin-right: 20px;
-    }
-}
-
-.profile-card .title {
-    word-break: break-all;
-}
-
-.profile-card .stats {
-    display: flex;
-    margin: 20px 0px;
-}
-
-.profile-card .stats span {
-    flex-basis: 50%;
-}
-
-.profile-card .user-website {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-}
-
-.profile-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding: 0 0px;
-}
-
-@media (max-width: 720px) {
-    .profile-header {
-        flex-wrap: wrap;
-    }
 }
 </style>
